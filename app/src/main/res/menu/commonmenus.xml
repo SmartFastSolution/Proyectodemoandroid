@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnBuscar"
+        android:title="@string/lbl_busqueda"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mnLectura"
+        android:title="@string/lbl_lectura"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mmDataBase"
+        android:title="@string/lbl_descargadatabase"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/mnSendData"
+        android:title="@string/lbl_enviodata"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Sistema Móvil</string>
+    <string name="lbl_usuario">USUARIO:</string>
+    <string name="lbl_clave">CLAVE:</string>
+
+    <string name="bnt_bienvenido">Bienvenido</string>
+    <string name="bnt_confirmar">CONFIRMAR</string>
+    <string name="bnt_login">INGRESAR</string>
+    <string name="bnt_fotos">FOTOS</string>
+    <string name="bnt_aceptar">ACEPTAR</string>
+    <string name="bnt_cancelar">CANCELAR</string>
+    <string name="bnt_salir">SALIR</string>
+
+    <string name="lbl_descargadatabase">Datos Iniciales</string>
+    <string name="lbl_lectura">Captura de datos</string>
+    <string name="lbl_busqueda">Busqueda</string>
+    <string name="lbl_enviodata">Envío de Data</string>
+
+    <string name="lbl_tipoatencion">Tipo de Atención :</string>
+    <string name="lbl_detallecontrol">Detalle de Control :</string>
+    <string name="lbl_observacioncontrol">Observaciones localizadas :</string>
+    <string name="lbl_accionescontrol">Acciones de control :</string>
+
+</resources>
