@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ec.proyectodemoandroid.controllers.AtencionesController;
+import com.ec.proyectodemoandroid.controllers.TipoPlagaController;
+import com.ec.proyectodemoandroid.modelos.AtencionesPipe;
+import com.ec.proyectodemoandroid.modelos.TipoPlaga;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -24,10 +28,15 @@ public class activity_menu extends AppCompatActivity {
 
     private PieChart menupiechart;
 
+    private List<AtencionesPipe> listaAtencionesPipe;
+    private AtencionesController atencionesController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        atencionesController = new AtencionesController(activity_menu.this);
 
         menupiechart = findViewById(R.id.activity_menu_piechart);
         setupPieChart();
@@ -39,7 +48,7 @@ public class activity_menu extends AppCompatActivity {
         menupiechart.setUsePercentValues(true);
         menupiechart.setEntryLabelTextSize(12);
         menupiechart.setEntryLabelColor(Color.BLACK);
-        menupiechart.setCenterText("Spending by Category");
+        menupiechart.setCenterText("Tipos de Plagas Identificadas");
         menupiechart.setCenterTextSize(24);
         menupiechart.getDescription().setEnabled(false);
 
@@ -52,12 +61,18 @@ public class activity_menu extends AppCompatActivity {
     }
 
     private void loadPieChartData() {
+
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(0.2f, "Food & Dining"));
-        entries.add(new PieEntry(0.15f, "Medical"));
-        entries.add(new PieEntry(0.10f, "Entertainment"));
-        entries.add(new PieEntry(0.25f, "Electricity and Gas"));
-        entries.add(new PieEntry(0.3f, "Housing"));
+        listaAtencionesPipe = atencionesController.obtenerAtencionesEstadistica();
+        for (AtencionesPipe item: listaAtencionesPipe) {
+            float val = Float.parseFloat(String.valueOf(item.getContador()));
+            entries.add(new PieEntry(val, item.getTipoplaga()));
+        }
+
+        //entries.add(new PieEntry(0.15f, "Medical"));
+        //entries.add(new PieEntry(0.10f, "Entertainment"));
+        //entries.add(new PieEntry(0.25f, "Electricity and Gas"));
+        //entries.add(new PieEntry(0.3f, "Housing"));
 
         ArrayList<Integer> colors = new ArrayList<>();
         for (int color: ColorTemplate.MATERIAL_COLORS) {
@@ -68,7 +83,7 @@ public class activity_menu extends AppCompatActivity {
             colors.add(color);
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Expense Category");
+        PieDataSet dataSet = new PieDataSet(entries, "Categoría de Plagas");
         dataSet.setColors(colors);
 
         PieData data = new PieData(dataSet);

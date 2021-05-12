@@ -70,6 +70,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
         bntConfirmar = findViewById(R.id.bntConfirmar);
         bntFotos = findViewById(R.id.bntFotos);
 
+
         txtDetalleControl = (TextView) findViewById(R.id.txtDetalleControl);
         txtObservacionesControl = (TextView) findViewById(R.id.txtObservacionesControl);
         txtAccionesControl = (TextView) findViewById(R.id.txtAccionesControl);
@@ -130,14 +131,25 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
     }
 
     private void p_confirmarLogica(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String tipoplaga =  listTipoAtencion.getSelectedItem().toString();
-        String detallecontrol = txtDetalleControl.getText().toString();
-        String observaciones = txtObservacionesControl.getText().toString();
-        String acciones = txtAccionesControl.getText().toString();
-        String fechaatencion = sdf.format(new Date());
-        Atenciones oInsert = new Atenciones(detallecontrol, tipoplaga, observaciones, acciones, fechaatencion, lc_lat, lc_lon, "", "1");
-        atencionesController.nuevaAtencion(oInsert);
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String tipoplaga = listTipoAtencion.getSelectedItem().toString();
+            String detallecontrol = txtDetalleControl.getText().toString();
+            String observaciones = txtObservacionesControl.getText().toString();
+            String acciones = txtAccionesControl.getText().toString();
+            String fechaatencion = sdf.format(new Date());
+
+            String ls_lat = "";
+            try{ls_lat = lblGPSRun.getText().toString().equals("")? "" : lblGPSRun.getText().toString().split(";")[0].replace("GPS:","").trim();}catch (Exception e){ls_lat = "";}
+            String ls_lon = "";
+            try{ls_lon = lblGPSRun.getText().toString().equals("")? "" : lblGPSRun.getText().toString().split(";")[1].trim(); }catch (Exception e){ls_lon = "";}
+
+
+            Atenciones oInsert = new Atenciones(detallecontrol, tipoplaga, observaciones, acciones, fechaatencion, ls_lat, ls_lon, "", "1");
+            atencionesController.nuevaAtencion(oInsert);
+        }catch (Exception ex){
+
+        }
         finish();
         return;
     }

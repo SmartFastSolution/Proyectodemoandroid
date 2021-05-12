@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.ec.proyectodemoandroid.HelpDataBase;
 import com.ec.proyectodemoandroid.modelos.Atenciones;
+import com.ec.proyectodemoandroid.modelos.AtencionesPipe;
 
 import java.util.ArrayList;
 
@@ -23,9 +24,10 @@ public class AtencionesController {
         // writable porque vamos a insertar
         SQLiteDatabase baseDeDatos = ayudanteBaseDatos.getWritableDatabase();
         ContentValues valoresParaInsertar = new ContentValues();
+        //detallecontrol, tipoplaga, observacion, acciones, fechaatencion, latitud, longitud, fotos, idusuario
         valoresParaInsertar.put("detallecontrol", o.getDetallecontrol());
         valoresParaInsertar.put("tipoplaga", o.getTipoplaga());
-        valoresParaInsertar.put("observaciones", o.getObservaciones());
+        valoresParaInsertar.put("observacion", o.getObservaciones());
         valoresParaInsertar.put("acciones", o.getAcciones());
         valoresParaInsertar.put("fechaatencion", o.getFechaatencion());
         valoresParaInsertar.put("latitud", o.getLatitud());
@@ -141,5 +143,49 @@ public class AtencionesController {
         cursor.close();
         return items;
     }
+
+    public ArrayList<AtencionesPipe> obtenerAtencionesEstadistica() {
+        ArrayList<AtencionesPipe> items = new ArrayList<>();
+        // readable porque no vamos a modificar, solamente leer
+        SQLiteDatabase baseDeDatos = ayudanteBaseDatos.getReadableDatabase();
+        String[] columns = new String[] { "tipoplaga", "count(*)" };
+        String groupBy = "tipoplaga";
+        Cursor cursor = baseDeDatos.query(
+                NOMBRE_TABLA,//from
+                columns,
+                null,
+                null,
+                groupBy,
+                null,
+                null
+        );
+
+        if (cursor == null) {
+            /*
+                Salimos aquí porque hubo un error, regresar
+                lista vacía
+             */
+            return items;
+
+        }
+        // Si no hay datos, igualmente regresamos la lista vacía
+        if (!cursor.moveToFirst()) return items;
+
+        // En caso de que sí haya, iteramos y vamos agregando los
+        // datos a la lista
+        do {
+            // El 0 es el número de la columna, como seleccionamos
+            //"detallecontrol", "tipoplaga", "observacion", "acciones", "fechaatencion", "latitud", "longitud", "fotos", "idusuario", "idatencion"
+            String tipoplagaDB = cursor.getString(0);
+            long idatencionDB = cursor.getLong(1);
+            AtencionesPipe objItems = new AtencionesPipe(tipoplagaDB,idatencionDB);
+            items.add(objItems);
+        } while (cursor.moveToNext());
+
+        // Fin del ciclo. Cerramos cursor y regresamos la lista :)
+        cursor.close();
+        return items;
+    }
+
 
 }
