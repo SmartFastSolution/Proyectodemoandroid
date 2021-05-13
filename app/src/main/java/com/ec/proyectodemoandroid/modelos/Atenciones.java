@@ -2,9 +2,12 @@ package com.ec.proyectodemoandroid.modelos;
 
 public class Atenciones {
 
+    //idtipoplaga, tipoplaga, idsector, detallecontrol, observacion, acciones, fechaatencion, latitud, longitud, fotos, idusuario
     private long id;
-    private String detallecontrol;
+    private String idtipoplaga;
     private String tipoplaga;
+    private String idsector;
+    private String detallecontrol;
     private String observaciones;
     private String acciones;
     private String fechaatencion;
@@ -13,9 +16,11 @@ public class Atenciones {
     private String fotos;
     private String idusuario;
 
-    public Atenciones(String detallecontrol, String tipoplaga, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario) {
-        this.detallecontrol = detallecontrol;
+    public Atenciones(String idtipoplaga, String tipoplaga, String idsector, String detallecontrol, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario) {
+        this.idtipoplaga = idtipoplaga;
         this.tipoplaga = tipoplaga;
+        this.idsector = idsector;
+        this.detallecontrol = detallecontrol;
         this.observaciones = observaciones;
         this.acciones = acciones;
         this.fechaatencion = fechaatencion;
@@ -25,10 +30,12 @@ public class Atenciones {
         this.idusuario = idusuario;
     }
 
-    public Atenciones(String detallecontrol, String tipoplaga, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario, long id) {
+    public Atenciones(String idtipoplaga, String tipoplaga, String idsector, String detallecontrol, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario, long id) {
         this.id = id;
-        this.detallecontrol = detallecontrol;
+        this.idtipoplaga = idtipoplaga;
         this.tipoplaga = tipoplaga;
+        this.idsector = idsector;
+        this.detallecontrol = detallecontrol;
         this.observaciones = observaciones;
         this.acciones = acciones;
         this.fechaatencion = fechaatencion;
@@ -46,12 +53,12 @@ public class Atenciones {
         this.id = id;
     }
 
-    public String getDetallecontrol() {
-        return detallecontrol;
+    public String getIdtipoplaga() {
+        return idtipoplaga;
     }
 
-    public void setDetallecontrol(String detallecontrol) {
-        this.detallecontrol = detallecontrol;
+    public void setIdtipoplaga(String idtipoplaga) {
+        this.idtipoplaga = idtipoplaga;
     }
 
     public String getTipoplaga() {
@@ -60,6 +67,22 @@ public class Atenciones {
 
     public void setTipoplaga(String tipoplaga) {
         this.tipoplaga = tipoplaga;
+    }
+
+    public String getIdsector() {
+        return idsector;
+    }
+
+    public void setIdsector(String idsector) {
+        this.idsector = idsector;
+    }
+
+    public String getDetallecontrol() {
+        return detallecontrol;
+    }
+
+    public void setDetallecontrol(String detallecontrol) {
+        this.detallecontrol = detallecontrol;
     }
 
     public String getObservaciones() {
@@ -121,8 +144,10 @@ public class Atenciones {
     @Override
     public String toString() {
         return "Atenciones{" +
-                "detallecontrol='" + detallecontrol + '\'' +
+                "idtipoplaga='" + idtipoplaga + '\'' +
                 ", tipoplaga='" + tipoplaga + '\'' +
+                ", idsector='" + idsector + '\'' +
+                ", detallecontrol='" + detallecontrol + '\'' +
                 ", observaciones='" + observaciones + '\'' +
                 ", acciones='" + acciones + '\'' +
                 ", fechaatencion='" + fechaatencion + '\'' +

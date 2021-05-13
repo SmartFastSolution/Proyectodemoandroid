@@ -24,7 +24,7 @@ public class TipoPlagaController {
         ArrayList<TipoPlaga> items = new ArrayList<>();
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDatos.getReadableDatabase();
-        String[] columnasAConsultar = {"descripcion", "idtipoplaga"};
+        String[] columnasAConsultar = {"detalleplaga", "idplaga"};
 
         Cursor cursor = baseDeDatos.query(
                 NOMBRE_TABLA,//from

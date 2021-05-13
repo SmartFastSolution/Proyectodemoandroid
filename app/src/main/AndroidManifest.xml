@@ -23,17 +23,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Proyectodemoandroid">
-        <activity android:name=".activity_atenciones"></activity>
-        <activity android:name=".activity_capturadata" />
-        <activity android:name=".activity_menu" />
-        <activity android:name=".activity_login" />
-        <activity android:name=".MainActivity">
+
+
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity_login" />
+        <activity android:name=".activity_menu" />
+        <activity android:name=".activity_atenciones"
+            android:parentActivityName=".activity_menu"/>
+        <activity android:name=".activity_capturadata"
+            android:parentActivityName=".activity_menu"/>
+
+
+
+
+
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

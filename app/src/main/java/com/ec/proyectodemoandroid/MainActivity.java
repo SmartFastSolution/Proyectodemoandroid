@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
                     ,"android.permission.WRITE_EXTERNAL_STORAGE"
                     ,"android.permission.READ_INTERNAL_STORAGE"
                     ,"android.permission.WRITE_INTERNAL_STORAGE"
-                    ,"android.permission.BLUETOOTH"
-                    ,"android.permission.BLUETOOTH_ADMIN"};
+                    };
             int permsRequestCode = 200;
             /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(perms, permsRequestCode);

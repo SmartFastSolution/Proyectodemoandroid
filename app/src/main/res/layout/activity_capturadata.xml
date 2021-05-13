@@ -12,11 +12,33 @@
     android:layout_height="match_parent"
     tools:context=".activity_capturadata">
 
+    <Spinner
+        android:id="@+id/listSectores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblTipoAtencion4" />
+
+    <TextView
+        android:id="@+id/lblTipoAtencion4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/lbl_sectores"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listTipoAtencion" />
+
     <EditText
         android:id="@+id/txtAccionesControl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -29,7 +51,7 @@
         android:id="@+id/lblAccionesControl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/lbl_accionescontrol"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
@@ -42,7 +64,7 @@
         android:id="@+id/txtObservacionesControl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -55,7 +77,7 @@
         android:id="@+id/lblTipoAtencion3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/lbl_observacioncontrol"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
@@ -67,21 +89,21 @@
         android:id="@+id/lblTipoAtencion2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:text="@string/lbl_detallecontrol"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listTipoAtencion" />
+        app:layout_constraintTop_toBottomOf="@+id/listSectores" />
 
     <TextView
         android:id="@+id/lblGps"
         android:layout_width="399dp"
         android:layout_height="27dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:drawableLeft="@drawable/gpslocation"
         android:text="GPS"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +115,7 @@
         android:id="@+id/lblTipoAtencion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/lbl_tipoatencion"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
@@ -106,7 +128,7 @@
         android:id="@+id/listTipoAtencion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblTipoAtencion" />
 
@@ -114,7 +136,7 @@
         android:id="@+id/txtDetalleControl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"

@@ -52,7 +52,7 @@ public class activity_atenciones extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adaptadorAtenciones);
 
-        refrescarListaDeArtenciones();
+        refrescarListaDeAtenciones();
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView,
                 new RecyclerTouchListener.ClickListener() {
@@ -80,6 +80,8 @@ public class activity_atenciones extends AppCompatActivity {
             }
         };
         txtCriterio.addTextChangedListener(t_txt);
+
+        getSupportActionBar().setTitle("Lista de Atenciones");
     }
 
     @Override
@@ -87,7 +89,7 @@ public class activity_atenciones extends AppCompatActivity {
         super.onResume();
     }
 
-    private void refrescarListaDeArtenciones() {
+    private void refrescarListaDeAtenciones() {
         /*
          * ==========
          * Justo aquí obtenemos la lista de la BD

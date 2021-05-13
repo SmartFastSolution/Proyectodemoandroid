@@ -24,10 +24,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ec.proyectodemoandroid.controllers.AtencionesController;
+import com.ec.proyectodemoandroid.controllers.SectoresController;
 import com.ec.proyectodemoandroid.controllers.TipoPlagaController;
 import com.ec.proyectodemoandroid.modelos.Atenciones;
+import com.ec.proyectodemoandroid.modelos.Sectores;
 import com.ec.proyectodemoandroid.modelos.TipoPlaga;
 
 import java.io.File;
@@ -44,7 +47,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
     private TextView lblGPSRun;
 
     private Button bntConfirmar, bntFotos;
-    private Spinner listTipoAtencion;
+    private Spinner listTipoAtencion, listSectores;
     private TextView txtDetalleControl, txtObservacionesControl, txtAccionesControl;
 
     protected LocationManager locationManager;
@@ -52,10 +55,15 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
     private String mCurrentPhotoPath = "", lc_nom = "", outputData = "", lc_idAtencion = "", lc_fotos = "";
 
     private List<TipoPlaga> listaTipoPlaga;
-    private TipoPlagaController tipoPlagaController;
+    private List<Sectores> listaSectores;
+    private List<Atenciones> listaAtenciones;
 
+    private TipoPlagaController tipoPlagaController;
+    private SectoresController sectoresController;
     private AtencionesController atencionesController;
 
+    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +71,13 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
         setContentView(R.layout.activity_capturadata);
 
         atencionesController = new AtencionesController(activity_capturadata.this);
+        tipoPlagaController = new TipoPlagaController(activity_capturadata.this);
+        sectoresController = new SectoresController(activity_capturadata.this);
 
         lblGPSRun = (TextView) findViewById(R.id.lblGps);
 
         listTipoAtencion = (Spinner) findViewById(R.id.listTipoAtencion);
+        listSectores = (Spinner) findViewById(R.id.listSectores);
         bntConfirmar = findViewById(R.id.bntConfirmar);
         bntFotos = findViewById(R.id.bntFotos);
 
@@ -88,14 +99,15 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
             }
         });
 
+        p_cargarListas();
+
         String idAtencion = "";
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             idAtencion = extras.getString("idAtencion");
+            p_cargarAtencion(idAtencion);
         }
         lc_idAtencion = idAtencion;
-
-        tipoPlagaController = new TipoPlagaController(activity_capturadata.this);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -104,8 +116,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         lblGPSRun.setFocusable(true);
 
-        p_cargarListas();
-
+        getSupportActionBar().setTitle("Captura de información");
     }
 
     private void p_confirmarClic(){
@@ -133,7 +144,9 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
     private void p_confirmarLogica(){
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String idtipoplaga = String.valueOf(listTipoAtencion.getSelectedItemId()+1);
             String tipoplaga = listTipoAtencion.getSelectedItem().toString();
+            String idsector = String.valueOf(listSectores.getSelectedItemId()+1);
             String detallecontrol = txtDetalleControl.getText().toString();
             String observaciones = txtObservacionesControl.getText().toString();
             String acciones = txtAccionesControl.getText().toString();
@@ -144,14 +157,21 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
             String ls_lon = "";
             try{ls_lon = lblGPSRun.getText().toString().equals("")? "" : lblGPSRun.getText().toString().split(";")[1].trim(); }catch (Exception e){ls_lon = "";}
 
+            if(lc_idAtencion.equals("")){
+                Atenciones oInsert = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos, "1");
+                atencionesController.nuevaAtencion(oInsert);
+            }else{
+                Atenciones oUpdate = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos, "1", Long.valueOf(lc_idAtencion));
+                atencionesController.actualizarAtencion(oUpdate);
+            }
 
-            Atenciones oInsert = new Atenciones(detallecontrol, tipoplaga, observaciones, acciones, fechaatencion, ls_lat, ls_lon, "", "1");
-            atencionesController.nuevaAtencion(oInsert);
+            Toast.makeText(activity_capturadata.this, "Información almacenada", Toast.LENGTH_SHORT).show();
+            finish();
+            startActivity(new Intent(activity_capturadata.this, activity_menu.class));
+            return;
         }catch (Exception ex){
-
+            Toast.makeText(activity_capturadata.this, "Revisar la informaciónnformación", Toast.LENGTH_SHORT).show();
         }
-        finish();
-        return;
     }
 
     private void p_cargarListas(){
@@ -160,9 +180,34 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
         for (TipoPlaga item: listaTipoPlaga) {
             sourceTipoTarea.add(item.getDetalleplaga());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sourceTipoTarea);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sourceTipoTarea);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         listTipoAtencion.setAdapter(adapter);
+
+        listaSectores = sectoresController.obtenerSector();
+        List<String> sourceSector =  new ArrayList<>();
+        for (Sectores item: listaSectores) {
+            sourceSector.add(item.getDetallesector());
+        }
+        adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sourceSector);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        listSectores.setAdapter(adapter1);
+    }
+
+    private void p_cargarAtencion(String id){
+        listaAtenciones = atencionesController.obtenerAtenciones("idtipoplaga", id, false);
+
+        String idtipoatencion = listaAtenciones.get(0).getIdtipoplaga().toString();
+        this.listTipoAtencion.setSelection(Integer.parseInt(idtipoatencion)-1);
+
+        String idsector = listaAtenciones.get(0).getIdsector().toString();
+        this.listSectores.setSelection(Integer.parseInt(idsector)-1);
+
+        this.txtDetalleControl.setText(listaAtenciones.get(0).getDetallecontrol().toString());
+        this.txtObservacionesControl.setText(listaAtenciones.get(0).getObservaciones().toString());
+        this.txtAccionesControl.setText(listaAtenciones.get(0).getAcciones().toString());
+        lc_fotos = listaAtenciones.get(0).getFotos().toString();
+
     }
 
     /*Metodos para tomar fotos*/
@@ -184,6 +229,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
+                lc_fotos += photoFile.toString().split("/")[9] + ";";
                 Uri photoURI = getUriForFile(getBaseContext(),
                         "com.example.android.provider",
                         photoFile);

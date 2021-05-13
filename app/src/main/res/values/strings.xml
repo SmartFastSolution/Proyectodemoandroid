@@ -20,5 +20,6 @@
     <string name="lbl_detallecontrol">Detalle de Control :</string>
     <string name="lbl_observacioncontrol">Observaciones localizadas :</string>
     <string name="lbl_accionescontrol">Acciones de control :</string>
+    <string name="lbl_sectores">Sectores :</string>
 
 </resources>
