@@ -43,12 +43,6 @@
         <activity android:name=".activity_capturadata"
             android:parentActivityName=".activity_menu"/>
 
-
-
-
-
-
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.provider"

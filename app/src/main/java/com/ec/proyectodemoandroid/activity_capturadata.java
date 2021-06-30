@@ -52,7 +52,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
 
     protected LocationManager locationManager;
     private String lc_lat, lc_lon;
-    private String mCurrentPhotoPath = "", lc_nom = "", outputData = "", lc_idAtencion = "", lc_fotos = "";
+    private String mCurrentPhotoPath = "", lc_nom = "", outputData = "", lc_idAtencion = "", lc_fotos = "", lc_estado = "0";
 
     private List<TipoPlaga> listaTipoPlaga;
     private List<Sectores> listaSectores;
@@ -152,17 +152,20 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
             String acciones = txtAccionesControl.getText().toString();
             String fechaatencion = sdf.format(new Date());
 
+
             String ls_lat = "";
             try{ls_lat = lblGPSRun.getText().toString().equals("")? "" : lblGPSRun.getText().toString().split(";")[0].replace("GPS:","").trim();}catch (Exception e){ls_lat = "";}
             String ls_lon = "";
             try{ls_lon = lblGPSRun.getText().toString().equals("")? "" : lblGPSRun.getText().toString().split(";")[1].trim(); }catch (Exception e){ls_lon = "";}
 
             if(lc_idAtencion.equals("")){
-                Atenciones oInsert = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos, "1");
+                Atenciones oInsert = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos,"1", "0");
                 atencionesController.nuevaAtencion(oInsert);
-            }else{
-                Atenciones oUpdate = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos, "1", Long.valueOf(lc_idAtencion));
+            }else if(lc_estado.equals("0")){
+                Atenciones oUpdate = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos, "1", "1", Long.valueOf(lc_idAtencion));
                 atencionesController.actualizarAtencion(oUpdate);
+            }else{
+                Toast.makeText(activity_capturadata.this, "No es posible modificar atenciones enviadas, contacte con el coordinador", Toast.LENGTH_SHORT).show();
             }
 
             Toast.makeText(activity_capturadata.this, "Información almacenada", Toast.LENGTH_SHORT).show();
@@ -207,7 +210,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
         this.txtObservacionesControl.setText(listaAtenciones.get(0).getObservaciones().toString());
         this.txtAccionesControl.setText(listaAtenciones.get(0).getAcciones().toString());
         lc_fotos = listaAtenciones.get(0).getFotos().toString();
-
+        lc_estado = listaAtenciones.get(0).getEstado().toString();
     }
 
     /*Metodos para tomar fotos*/

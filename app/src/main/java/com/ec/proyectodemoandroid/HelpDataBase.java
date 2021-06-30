@@ -21,7 +21,7 @@ public class HelpDataBase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(idatencion integer primary key autoincrement, idtipoplaga int, tipoplaga text, idsector int, detallecontrol text, observacion text, acciones text, fechaatencion text, latitud text, longitud text, fotos text, idusuario integer)",
+        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(idatencion integer primary key autoincrement, idtipoplaga int, tipoplaga text, idsector int, detallecontrol text, observacion text, acciones text, fechaatencion text, latitud text, longitud text, fotos text, idusuario integer, estado integer)",
                 NOMBRE_TABLA_ATENCIONES));
         db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(idplaga integer, detalleplaga text)",
                 NOMBRE_TABLA_TIPOPLAGA));

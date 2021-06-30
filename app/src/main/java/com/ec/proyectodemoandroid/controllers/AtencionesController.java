@@ -36,6 +36,7 @@ public class AtencionesController {
         valoresParaInsertar.put("longitud", o.getLongitud());
         valoresParaInsertar.put("fotos", o.getFotos());
         valoresParaInsertar.put("idusuario", o.getIdusuario());
+        valoresParaInsertar.put("estado", o.getEstado());
         return baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
     }
 
@@ -55,7 +56,7 @@ public class AtencionesController {
         valoresParaInsertar.put("longitud", o.getLongitud());
         valoresParaInsertar.put("fotos", o.getFotos());
         valoresParaInsertar.put("idusuario", o.getIdusuario());
-
+        valoresParaInsertar.put("estado", o.getEstado());
         String whereClause = "idatencion=?";
         String[] whereArgs = new String [] { String.valueOf(o.getId()) };
 
@@ -67,7 +68,7 @@ public class AtencionesController {
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDatos.getReadableDatabase();
         //idtipoplaga, idsector, detallecontrol, observacion, acciones, fechaatencion, latitud, longitud, fotos, idusuario
-        String[] columnasAConsultar = {"idtipoplaga", "tipoplaga", "idsector", "detallecontrol", "observacion", "acciones", "fechaatencion", "latitud", "longitud", "fotos", "idusuario", "idatencion"};
+        String[] columnasAConsultar = {"idtipoplaga", "tipoplaga", "idsector", "detallecontrol", "observacion", "acciones", "fechaatencion", "latitud", "longitud", "fotos", "idusuario", "estado", "idatencion"};
 
         String selection = p_columna + (p_like?" LIKE ? ":" = ? ");
         String[] whereClause={  p_like?"%"+ p_valor.toString() + "%":p_valor.toString() };
@@ -109,9 +110,9 @@ public class AtencionesController {
             String longitudDB = cursor.getString(8);
             String fotosDB = cursor.getString(9);
             String idusuarioDB = cursor.getString(10);
-            long idatencionDB = cursor.getLong(11);
-
-            Atenciones objItems = new Atenciones(idtipoplagaDB, tipoplagaDB, idsectorDB, detallecontrolDB, observacionesDB, accionesDB, fechaatencionDB, latitudDB, longitudDB, fotosDB, idusuarioDB, idatencionDB);
+            String estadoDB = String.valueOf(cursor.getLong(11));
+            long idatencionDB = cursor.getLong(12);
+            Atenciones objItems = new Atenciones(idtipoplagaDB, tipoplagaDB, idsectorDB, detallecontrolDB, observacionesDB, accionesDB, fechaatencionDB, latitudDB, longitudDB, fotosDB, idusuarioDB, estadoDB, idatencionDB);
             items.add(objItems);
         } while (cursor.moveToNext());
 
@@ -125,7 +126,7 @@ public class AtencionesController {
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDatos.getReadableDatabase();
         //idtipoplaga, tipoplaga, idsector, detallecontrol, observacion, acciones, fechaatencion, latitud, longitud, fotos, idusuario
-        String[] columnasAConsultar = {"idtipoplaga", "tipoplaga", "idsector", "detallecontrol", "observacion", "acciones", "fechaatencion", "latitud", "longitud", "fotos", "idusuario", "idatencion"};
+        String[] columnasAConsultar = {"idtipoplaga", "tipoplaga", "idsector", "detallecontrol", "observacion", "acciones", "fechaatencion", "latitud", "longitud", "fotos", "idusuario", "idatencion", "estado"};
 
         Cursor cursor = baseDeDatos.query(
                 NOMBRE_TABLA,//from
@@ -164,9 +165,9 @@ public class AtencionesController {
             String longitudDB = cursor.getString(8);
             String fotosDB = cursor.getString(9);
             String idusuarioDB = cursor.getString(10);
-            long idatencionDB = cursor.getLong(11);
-
-            Atenciones objItems = new Atenciones(idtipoplagaDB, tipoplagaDB, idsectorDB, detallecontrolDB, observacionesDB, accionesDB, fechaatencionDB, latitudDB, longitudDB, fotosDB, idusuarioDB, idatencionDB);
+            String estadoDB = String.valueOf(cursor.getLong(11));
+            long idatencionDB = cursor.getLong(12);
+            Atenciones objItems = new Atenciones(idtipoplagaDB, tipoplagaDB, idsectorDB, detallecontrolDB, observacionesDB, accionesDB, fechaatencionDB, latitudDB, longitudDB, fotosDB, idusuarioDB, estadoDB, idatencionDB);
             items.add(objItems);
         } while (cursor.moveToNext());
 

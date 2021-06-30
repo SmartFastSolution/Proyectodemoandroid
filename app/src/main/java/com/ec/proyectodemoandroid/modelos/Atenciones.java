@@ -15,8 +15,10 @@ public class Atenciones {
     private String longitud;
     private String fotos;
     private String idusuario;
+    private String estado;
 
-    public Atenciones(String idtipoplaga, String tipoplaga, String idsector, String detallecontrol, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario) {
+
+    public Atenciones(String idtipoplaga, String tipoplaga, String idsector, String detallecontrol, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario, String estado) {
         this.idtipoplaga = idtipoplaga;
         this.tipoplaga = tipoplaga;
         this.idsector = idsector;
@@ -28,9 +30,10 @@ public class Atenciones {
         this.longitud = longitud;
         this.fotos = fotos;
         this.idusuario = idusuario;
+        this.estado = estado;
     }
 
-    public Atenciones(String idtipoplaga, String tipoplaga, String idsector, String detallecontrol, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario, long id) {
+    public Atenciones(String idtipoplaga, String tipoplaga, String idsector, String detallecontrol, String observaciones, String acciones, String fechaatencion, String latitud, String longitud, String fotos, String idusuario, String estado, long id) {
         this.id = id;
         this.idtipoplaga = idtipoplaga;
         this.tipoplaga = tipoplaga;
@@ -43,6 +46,7 @@ public class Atenciones {
         this.longitud = longitud;
         this.fotos = fotos;
         this.idusuario = idusuario;
+        this.estado = estado;
     }
 
     public long getId() {
@@ -141,6 +145,14 @@ public class Atenciones {
         this.idusuario = idusuario;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
         return "Atenciones{" +
@@ -155,6 +167,7 @@ public class Atenciones {
                 ", longitud='" + longitud + '\'' +
                 ", fotos='" + fotos + '\'' +
                 ", idusuario='" + idusuario + '\'' +
+                ", estado='" + estado + '\'' +
                 '}';
     }
 }
