@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".activity_atenciones">
 
+    <Spinner
+        android:id="@+id/listEstadosBusqueda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCriterio" />
+
     <EditText
         android:id="@+id/txtCriterio"
         android:layout_width="0dp"
@@ -24,13 +32,9 @@
         android:id="@+id/atencion_list"
         android:layout_width="match_parent"
         android:layout_height="456dp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCriterio"
+        app:layout_constraintTop_toBottomOf="@+id/listEstadosBusqueda"
         tools:listitem="@layout/fila_atencion" />
 
 

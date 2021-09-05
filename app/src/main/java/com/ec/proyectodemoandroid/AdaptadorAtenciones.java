@@ -39,7 +39,7 @@ public class AdaptadorAtenciones extends RecyclerView.Adapter<AdaptadorAtencione
         // Obtener los datos de la lista
         String tipoplaga = obj.getTipoplaga();
         String detallecontrol = obj.getDetallecontrol();
-        String fechaatencion = obj.getFechaatencion();
+        String fechaatencion = obj.getEstado() + " " + obj.getFechaatencion();
         float id = obj.getId();
         // Y poner a los TextView los datos con setText
         myViewHolder.tipoplaga.setText(tipoplaga);

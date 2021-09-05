@@ -100,7 +100,8 @@ public class AtencionesController {
             // El 0 es el número de la columna, como seleccionamos
             //idtipoplaga, idsector, detallecontrol, observacion, acciones, fechaatencion, latitud, longitud, fotos, idusuario
             String idtipoplagaDB = String.valueOf(cursor.getLong(0));
-            String tipoplagaDB = String.valueOf(cursor.getLong(1));
+            //String tipoplagaDB = String.valueOf(cursor.getLong(1));
+            String tipoplagaDB = cursor.getString(1);
             String idsectorDB = String.valueOf(cursor.getLong(2));
             String detallecontrolDB = cursor.getString(3);
             String observacionesDB = cursor.getString(4);
@@ -110,7 +111,7 @@ public class AtencionesController {
             String longitudDB = cursor.getString(8);
             String fotosDB = cursor.getString(9);
             String idusuarioDB = cursor.getString(10);
-            String estadoDB = String.valueOf(cursor.getLong(11));
+            String estadoDB = cursor.getString(11);
             long idatencionDB = cursor.getLong(12);
             Atenciones objItems = new Atenciones(idtipoplagaDB, tipoplagaDB, idsectorDB, detallecontrolDB, observacionesDB, accionesDB, fechaatencionDB, latitudDB, longitudDB, fotosDB, idusuarioDB, estadoDB, idatencionDB);
             items.add(objItems);
@@ -126,7 +127,7 @@ public class AtencionesController {
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDatos.getReadableDatabase();
         //idtipoplaga, tipoplaga, idsector, detallecontrol, observacion, acciones, fechaatencion, latitud, longitud, fotos, idusuario
-        String[] columnasAConsultar = {"idtipoplaga", "tipoplaga", "idsector", "detallecontrol", "observacion", "acciones", "fechaatencion", "latitud", "longitud", "fotos", "idusuario", "idatencion", "estado"};
+        String[] columnasAConsultar = {"idtipoplaga", "tipoplaga", "idsector", "detallecontrol", "observacion", "acciones", "fechaatencion", "latitud", "longitud", "fotos", "idusuario", "estado", "idatencion"};
 
         Cursor cursor = baseDeDatos.query(
                 NOMBRE_TABLA,//from
@@ -165,7 +166,7 @@ public class AtencionesController {
             String longitudDB = cursor.getString(8);
             String fotosDB = cursor.getString(9);
             String idusuarioDB = cursor.getString(10);
-            String estadoDB = String.valueOf(cursor.getLong(11));
+            String estadoDB = cursor.getString(11);
             long idatencionDB = cursor.getLong(12);
             Atenciones objItems = new Atenciones(idtipoplagaDB, tipoplagaDB, idsectorDB, detallecontrolDB, observacionesDB, accionesDB, fechaatencionDB, latitudDB, longitudDB, fotosDB, idusuarioDB, estadoDB, idatencionDB);
             items.add(objItems);

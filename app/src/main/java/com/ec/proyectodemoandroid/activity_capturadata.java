@@ -47,7 +47,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
     private TextView lblGPSRun;
 
     private Button bntConfirmar, bntFotos;
-    private Spinner listTipoAtencion, listSectores;
+    private Spinner listTipoAtencion, listSectores, listEstados;
     private TextView txtDetalleControl, txtObservacionesControl, txtAccionesControl;
 
     protected LocationManager locationManager;
@@ -64,6 +64,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
 
     private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
+    private ArrayAdapter<String> adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,8 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
 
         listTipoAtencion = (Spinner) findViewById(R.id.listTipoAtencion);
         listSectores = (Spinner) findViewById(R.id.listSectores);
+        listEstados =  (Spinner) findViewById(R.id.listEstados);
+
         bntConfirmar = findViewById(R.id.bntConfirmar);
         bntFotos = findViewById(R.id.bntFotos);
 
@@ -151,6 +154,7 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
             String observaciones = txtObservacionesControl.getText().toString();
             String acciones = txtAccionesControl.getText().toString();
             String fechaatencion = sdf.format(new Date());
+            String estado = listEstados.getSelectedItem().toString();
 
 
             String ls_lat = "";
@@ -159,10 +163,10 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
             try{ls_lon = lblGPSRun.getText().toString().equals("")? "" : lblGPSRun.getText().toString().split(";")[1].trim(); }catch (Exception e){ls_lon = "";}
 
             if(lc_idAtencion.equals("")){
-                Atenciones oInsert = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos,"1", "0");
+                Atenciones oInsert = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos,"1", estado);
                 atencionesController.nuevaAtencion(oInsert);
-            }else if(lc_estado.equals("0")){
-                Atenciones oUpdate = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos, "1", "1", Long.valueOf(lc_idAtencion));
+            }else if(!lc_estado.equals("Detectado")){
+                Atenciones oUpdate = new Atenciones(idtipoplaga, tipoplaga, idsector, detallecontrol, observaciones, acciones, fechaatencion, ls_lat, ls_lon, lc_fotos, "1", estado, Long.valueOf(lc_idAtencion));
                 atencionesController.actualizarAtencion(oUpdate);
             }else{
                 Toast.makeText(activity_capturadata.this, "No es posible modificar atenciones enviadas, contacte con el coordinador", Toast.LENGTH_SHORT).show();
@@ -195,6 +199,16 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
         adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sourceSector);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         listSectores.setAdapter(adapter1);
+
+        List<String> sourceEstados =  new ArrayList<>();
+        sourceEstados.add("Detectado");
+        sourceEstados.add("En Seguimiento");
+        sourceEstados.add("Solucionado");
+
+        adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sourceEstados);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        listEstados.setAdapter(adapter2);
+
     }
 
     private void p_cargarAtencion(String id){
@@ -211,6 +225,12 @@ public class activity_capturadata extends AppCompatActivity implements LocationL
         this.txtAccionesControl.setText(listaAtenciones.get(0).getAcciones().toString());
         lc_fotos = listaAtenciones.get(0).getFotos().toString();
         lc_estado = listaAtenciones.get(0).getEstado().toString();
+        if(lc_estado.equals("Detectado"))
+            this.listEstados.setSelection(0);
+        else if(lc_estado.equals("En Seguimiento"))
+            this.listEstados.setSelection(1);
+        else
+            this.listEstados.setSelection(2);
     }
 
     /*Metodos para tomar fotos*/
